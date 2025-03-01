@@ -31,11 +31,12 @@
     <canvas id="optimizationChart"></canvas>
 
     <script>
-        let optimizationChart; // ✅ Store chart instance
+        let optimizationChart;
+        const API_URL = "http://192.168.8.109:5000/optimize";  // ✅ Replace with your actual hosted API if using Render
 
         async function fetchOptimization() {
             try {
-                const response = await fetch("http://127.0.0.1:5000/optimize");
+                const response = await fetch(API_URL);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -43,7 +44,7 @@
                 console.log("✅ Received Data:", data);
 
                 const tableBody = document.getElementById("results");
-                tableBody.innerHTML = ""; // Clear previous results
+                tableBody.innerHTML = "";
 
                 let stepNumbers = [];
                 let cpuValues = [];
@@ -69,7 +70,6 @@
                     tableBody.innerHTML += row;
                 });
 
-                // ✅ Update Chart
                 updateChart(stepNumbers, cpuValues, memoryValues, latencyValues, rewardValues);
 
             } catch (error) {
@@ -82,7 +82,7 @@
             const ctx = document.getElementById("optimizationChart").getContext("2d");
 
             if (optimizationChart) {
-                optimizationChart.destroy(); // ✅ Destroy previous chart before updating
+                optimizationChart.destroy();
             }
 
             optimizationChart = new Chart(ctx, {
@@ -90,30 +90,10 @@
                 data: {
                     labels: labels,
                     datasets: [
-                        {
-                            label: "CPU Usage",
-                            data: cpu,
-                            borderColor: "red",
-                            fill: false
-                        },
-                        {
-                            label: "Memory Usage",
-                            data: memory,
-                            borderColor: "blue",
-                            fill: false
-                        },
-                        {
-                            label: "Latency",
-                            data: latency,
-                            borderColor: "green",
-                            fill: false
-                        },
-                        {
-                            label: "Reward",
-                            data: reward,
-                            borderColor: "purple",
-                            fill: false
-                        }
+                        { label: "CPU Usage", data: cpu, borderColor: "red", fill: false },
+                        { label: "Memory Usage", data: memory, borderColor: "blue", fill: false },
+                        { label: "Latency", data: latency, borderColor: "green", fill: false },
+                        { label: "Reward", data: reward, borderColor: "purple", fill: false }
                     ]
                 },
                 options: {
