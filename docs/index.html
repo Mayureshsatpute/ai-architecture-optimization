@@ -32,7 +32,7 @@
 
     <script>
         let optimizationChart;
-        const API_URL = "http://192.168.8.109:5000/optimize";  // ✅ Replace with your actual hosted API if using Render
+        const API_URL = "http://192.168.8.109:5000/optimize";  // ✅ Use your local Flask API
 
         async function fetchOptimization() {
             try {
@@ -74,7 +74,7 @@
 
             } catch (error) {
                 console.error("❌ Error fetching data:", error);
-                alert("Failed to connect to AI optimizer. Make sure Flask is running!");
+                alert("Failed to connect to AI optimizer! Make sure Flask is running.");
             }
         }
 
